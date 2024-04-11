@@ -1,0 +1,14 @@
+package africa.semicolon.blogproject.service;
+
+import africa.semicolon.blogproject.data.model.model.User;
+import africa.semicolon.blogproject.dtos.PostRequest;
+import africa.semicolon.blogproject.responses.PostReturnResponse;
+import org.springframework.stereotype.Service;
+
+@Service
+public interface PostService {
+    PostReturnResponse postBlog(PostRequest postRequest);
+    long getListOfPost();
+
+
+}

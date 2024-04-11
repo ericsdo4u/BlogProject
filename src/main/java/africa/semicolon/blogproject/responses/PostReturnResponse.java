@@ -1,0 +1,13 @@
+package africa.semicolon.blogproject.responses;
+
+import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Data
+@Document
+public class PostReturnResponse {
+    private String title;
+    private String content;
+    private String id;
+    private String postedAt;
+}
