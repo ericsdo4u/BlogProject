@@ -9,10 +9,7 @@ import africa.semicolon.blogproject.responses.ViewResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
-
 import static africa.semicolon.blogproject.utilities.MapperClass.mapViewResponse;
-
 
 @AllArgsConstructor
 @Service
