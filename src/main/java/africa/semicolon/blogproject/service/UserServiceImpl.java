@@ -16,6 +16,8 @@ import africa.semicolon.blogproject.responses.DeleteReturnResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static africa.semicolon.blogproject.utilities.MapperClass.*;
 @AllArgsConstructor
 @Service
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService{
     public long getListOfRegisterUsers() {
         return userRepository.count();
     }
+
     @Override
     public RegisterResponse register(RegisterRequest registerRequest) {
         validateUser(registerRequest.getUsername());
@@ -73,5 +76,11 @@ public class UserServiceImpl implements UserService{
         if (user.isPresent()){
             throw new UserAlreadyExistException("user already exist, please login");
         }
+    }
+    @Override
+    public void checkUser(String username) {
+        Optional<User> user = userRepository.findUserByUsername(username);
+        if(user.isEmpty()) throw new UserNotFoundException("User not found");
+
     }
 }

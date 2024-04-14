@@ -15,6 +15,5 @@ public class User {
     private String email;
     @Id
     private String id;
-    private List<Post> posts;
     private LocalDateTime createdAt = LocalDateTime.now();
 }

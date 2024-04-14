@@ -18,6 +18,5 @@ public interface UserService {
     LogOutResponse logOut(LogOutRequest logOutRequest);
     DeleteReturnResponse deleteByUsername(DeleteRequest deleteRequest);
     long getListOfRegisterUsers();
-
-
+    void checkUser(String username);
 }

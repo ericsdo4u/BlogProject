@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface PostService {
     PostReturnResponse postBlog(PostRequest postRequest);
-    PostReturnResponse post(PostRequest postRequest);
-
     long getListOfPost();
     PostReturnResponse editPost(PostRequest postRequest);
 

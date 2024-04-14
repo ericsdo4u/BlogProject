@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 @Document
 @Data
 public class Comment {
-    private LocalDateTime timeOfView;
-    private User viewer;
+    private String commentMessage;
     private String username;
     @Id
     private String id;
+    private String postId;
     private LocalDateTime commentedAt = LocalDateTime.now();
 }

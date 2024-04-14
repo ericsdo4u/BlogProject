@@ -25,7 +25,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    public void registerOneUser_OneUserRgisteredTest(){
+    public void registerOneUser_OneUserRegisteredTest(){
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setEmail("ericsonericdon66@gmail.com");
         registerRequest.setUsername("ericson");

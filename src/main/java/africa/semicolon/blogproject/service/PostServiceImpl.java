@@ -36,19 +36,6 @@ public class PostServiceImpl implements PostService{
         return mapPostReturnMessage(newPost);
     }
 
-
-//    @Override
-//    public PostReturnResponse post(PostRequest postRequest) {
-//        Optional<User> foundUser = Optional.ofNullable(userRepository.findByUsername(postRequest.getUsername()));
-//        if (foundUser.isEmpty()) {
-//            throw new UserNotFoundException("no user found");
-//        }
-//        User newPost1 = foundUser.get();
-//        Post post = mapPostResponse(newPost1);
-//        Post newPost = postRepository.save(post);
-//        return mapPostReturnMessage(newPost);
-//    }
-
     @Override
     public PostReturnResponse editPost(PostRequest postRequest) {
         Optional<Post> foundPost = Optional.ofNullable(postRepository.findPostByAuthor(postRequest.getAuthor()));
@@ -78,10 +65,5 @@ public class PostServiceImpl implements PostService{
     public long getListOfPost() {
         return postRepository.count();
     }
-
-    public void incrementViews(Post post) {
-        post.incrementViews();
-    }
-
 
 }

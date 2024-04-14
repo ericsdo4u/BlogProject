@@ -1,11 +1,15 @@
 package africa.semicolon.blogproject.utilities;
 
+import africa.semicolon.blogproject.data.model.model.Comment;
 import africa.semicolon.blogproject.data.model.model.Post;
 import africa.semicolon.blogproject.data.model.model.User;
 import africa.semicolon.blogproject.data.model.model.View;
 import africa.semicolon.blogproject.dtos.*;
 import africa.semicolon.blogproject.responses.*;
+import africa.semicolon.blogproject.dtos.CommentRequest;
+import africa.semicolon.blogproject.responses.CommentResponse;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MapperClass {
@@ -65,11 +69,32 @@ public class MapperClass {
     public static boolean isPasswordIncorrect(User foundUser, String password) {
         return !foundUser.getPassword().equals(password);
     }
-    public static ViewResponse mapViewResponse(Post view){
+    public static View mapView(ViewRequest request) {
+        View view = new View();
+        view.setUsername(request.getUsername());
+        return view;
+    }
+    public static ViewResponse mapViewResponse(View view){
         ViewResponse viewer = new ViewResponse();
-        viewer.setMessage(view.getUsername() + "viewed your post");
-        viewer.setTimeOfView(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(view.getCreatedAt()));
+        viewer.setUsername(view.getUsername());
+        viewer.setMessage("viewed your post");
+        viewer.setTimeOfView(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(view.getTimeOfView()));
         return viewer;
+    }
+    public static Comment mapComment(CommentRequest request){
+        Comment comment = new Comment();
+        comment.setCommentMessage(request.getCommentMessage());
+        comment.setUsername(request.getUsername());
+        return comment;
+    }
+    public static CommentResponse mapCommentResponse(Comment comment) {
+        CommentResponse commentResponse = new CommentResponse();
+        commentResponse.setCommentMessage(comment.getCommentMessage());
+        commentResponse.setUsername(comment.getUsername());
+        commentResponse.setPostId(comment.getPostId());
+        commentResponse.setTimeCommented(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(comment.getCommentedAt()));
+
+        return commentResponse;
     }
 }
 

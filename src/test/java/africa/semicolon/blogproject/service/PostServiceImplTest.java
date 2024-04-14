@@ -83,24 +83,22 @@ class PostServiceImplTest {
         assertEquals(1, postRepository.count());
     }
 
-
-
-    @Test
-    public void testThatOnlyUserCanInitiate_A_Post(){
-
-        RegisterRequest request = new RegisterRequest();
-        request.setUsername("eric");
-        request.setPassword("password");
-        request.setEmail("ericson@gmail.com");
-        userService.register(request);
-        assertEquals(1, userRepository.count());
-
-        PostRequest postRequest = new PostRequest();
-        postRequest.setUsername("eric");
-        postRequest.setTitle("weather");
-        postRequest.setContent("is a rainy day");
-        postRequest.setAuthor("ddon");
-        postService.post(postRequest);
-        assertEquals(1, postService.getListOfPost());
-    }
+//    @Test
+//    public void testThatOnlyUserCanInitiate_A_Post(){
+//
+//        RegisterRequest request = new RegisterRequest();
+//        request.setUsername("eric");
+//        request.setPassword("password");
+//        request.setEmail("ericson@gmail.com");
+//        userService.register(request);
+//        assertEquals(1, userRepository.count());
+//
+//        PostRequest postRequest = new PostRequest();
+//        postRequest.setUsername("eric");
+//        postRequest.setTitle("weather");
+//        postRequest.setContent("is a rainy day");
+//        postRequest.setAuthor("ddon");
+//        postService.post(postRequest);
+//        assertEquals(1, postService.getListOfPost());
+//    }
 }

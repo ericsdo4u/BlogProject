@@ -1,15 +1,15 @@
 package africa.semicolon.blogproject.dtos;
 
-import africa.semicolon.blogproject.data.model.model.User;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Data
 @Document
-public class ViewRequest {
+public class CommentRequest {
+    private String commentMessage;
     private String username;
+    private String id;
     private String postId;
-//    private User viewer;
-    private String timeOfView;
+    private String commentedAt;
 }

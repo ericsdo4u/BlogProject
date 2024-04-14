@@ -2,8 +2,10 @@ package africa.semicolon.blogproject.controller;
 
 import africa.semicolon.blogproject.dtos.*;
 import africa.semicolon.blogproject.responses.ApiResponse;
+import africa.semicolon.blogproject.service.CommentService;
 import africa.semicolon.blogproject.service.PostService;
 import africa.semicolon.blogproject.service.UserService;
+import africa.semicolon.blogproject.service.ViewService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
+@AllArgsConstructor
 @RestController
 public class UserController {
-    @Autowired
     private UserService userService;
-    @Autowired
     private PostService postService;
+    private CommentService commentService;
+    private ViewService viewService;
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
         try {
@@ -59,6 +62,25 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@RequestBody DeleteRequest deleteRequest) {
         try {
             var result = userService.deleteByUsername(deleteRequest);
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
+        }
+    }
+    @PostMapping("/comment")
+    public ResponseEntity<?> commentOnPost(@RequestBody CommentRequest commentRequest) {
+        try {
+            var result = commentService.comment(commentRequest);
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/viewPost")
+    public ResponseEntity<?> viewed(@RequestBody ViewRequest viewRequest) {
+        try {
+            var result = viewService.viewPost(viewRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
