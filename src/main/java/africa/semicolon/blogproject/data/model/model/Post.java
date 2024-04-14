@@ -12,10 +12,15 @@ import java.util.List;
 public class Post {
     private String title;
     private LocalDateTime createdAt = LocalDateTime.now();
-
+    private String author;
     private List<Comment> comments;
     @Id
     private String id;
+    private String username;
     private List<View> views;
     private String content;
+
+    public void incrementViews() {
+       // this.views = views + 1;
+    }
 }

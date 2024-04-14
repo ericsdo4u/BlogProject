@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 @Data
 @Document
 public class View {
+    private int views;
     private User viewer;
+    private String username;
     @Id
     private String id;
-    private LocalDateTime timeOfView;
+    private LocalDateTime timeOfView = LocalDateTime.now();
 }

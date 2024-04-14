@@ -102,10 +102,9 @@ class UserServiceImplTest {
         loginRequest.setPassword("1234");
         userService.login(loginRequest);
         assertFalse(user.isLocked());
-
     }
     @Test
-    public void testThatUser_CanRegisterTest(){
+    public void testThatOneUserIsRegistered_AndDeleted_RepoIsEmpty(){
       RegisterRequest request = new RegisterRequest();
       request.setUsername("eric");
       request.setPassword("password");
@@ -117,6 +116,5 @@ class UserServiceImplTest {
         deleteRequest.setUsername("eric");
         userService.deleteByUsername(deleteRequest);
         assertEquals(0, userRepository.count());
-
     }
 }

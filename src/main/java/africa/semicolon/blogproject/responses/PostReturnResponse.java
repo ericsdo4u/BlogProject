@@ -9,5 +9,6 @@ public class PostReturnResponse {
     private String title;
     private String content;
     private String id;
+    private String author;
     private String postedAt;
 }

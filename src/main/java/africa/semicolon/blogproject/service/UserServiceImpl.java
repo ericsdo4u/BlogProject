@@ -20,7 +20,7 @@ import static africa.semicolon.blogproject.utilities.MapperClass.*;
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
 
     @Override

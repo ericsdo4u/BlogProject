@@ -2,6 +2,7 @@ package africa.semicolon.blogproject.utilities;
 
 import africa.semicolon.blogproject.data.model.model.Post;
 import africa.semicolon.blogproject.data.model.model.User;
+import africa.semicolon.blogproject.data.model.model.View;
 import africa.semicolon.blogproject.dtos.*;
 import africa.semicolon.blogproject.responses.*;
 
@@ -45,12 +46,11 @@ public class MapperClass {
             throw new IllegalArgumentException("login");
     }
     public static Post mapPostResponse(PostRequest postRequest){
-        User user = new User();
     Post post = new Post();
+    post.setUsername(post.getUsername());
     post.setTitle(postRequest.getTitle());
     post.setContent(postRequest.getContent());
-    user.setPosts(user.getPosts());
-
+    post.setAuthor(postRequest.getAuthor());
     return post;
     }
     public static PostReturnResponse mapPostReturnMessage(Post post){
@@ -58,15 +58,18 @@ public class MapperClass {
         postReturnResponse.setTitle(post.getTitle());
         postReturnResponse.setContent(post.getContent());
         postReturnResponse.setId(post.getId());
+        postReturnResponse.setAuthor(post.getAuthor());
         postReturnResponse.setPostedAt(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(post.getCreatedAt()));
         return postReturnResponse;
     }
-
     public static boolean isPasswordIncorrect(User foundUser, String password) {
         return !foundUser.getPassword().equals(password);
     }
-    public static Post updatePostWith(){
-        return null;
+    public static ViewResponse mapViewResponse(Post view){
+        ViewResponse viewer = new ViewResponse();
+        viewer.setMessage(view.getUsername() + "viewed your post");
+        viewer.setTimeOfView(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(view.getCreatedAt()));
+        return viewer;
     }
 }
 
