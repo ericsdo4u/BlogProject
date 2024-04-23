@@ -21,9 +21,8 @@ class UserServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        userService = new UserServiceImpl(userRepository);
+        userRepository.deleteAll();
     }
-
     @Test
     public void registerOneUser_OneUserRegisteredTest(){
         RegisterRequest registerRequest = new RegisterRequest();
@@ -69,20 +68,20 @@ class UserServiceImplTest {
     public void registerOneUserLoginAndLogOut_UserLogOutTest(){
         User user = new User();
         RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setEmail("ericsonericdon66@gmail.com");
-        registerRequest.setUsername("ericson2");
+        registerRequest.setEmail("ericsonericdon@gmail.com");
+        registerRequest.setUsername("epics");
         registerRequest.setPassword("1234");
         userService.register(registerRequest);
         assertEquals(1, userService.getListOfRegisterUsers());
 
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername("ericson2");
+        loginRequest.setUsername("epics");
         loginRequest.setPassword("1234");
         userService.login(loginRequest);
         assertFalse(user.isLocked());
 
         LogOutRequest logOutRequest = new LogOutRequest();
-        logOutRequest.setUsername("ericson2");
+        logOutRequest.setUsername("epics");
         logOutRequest.setPassword("1234");
         userService.logOut(logOutRequest);
         assertFalse(user.isLocked());

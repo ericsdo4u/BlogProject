@@ -1,10 +1,13 @@
 package africa.semicolon.blogproject.service;
 
+import africa.semicolon.blogproject.data.model.model.Post;
 import africa.semicolon.blogproject.dtos.DeleteRequest;
 import africa.semicolon.blogproject.dtos.PostRequest;
 import africa.semicolon.blogproject.responses.DeleteReturnResponse;
 import africa.semicolon.blogproject.responses.PostReturnResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface PostService {
@@ -13,5 +16,9 @@ public interface PostService {
     PostReturnResponse editPost(PostRequest postRequest);
 
     DeleteReturnResponse deletePost(DeleteRequest request);
+
+    List<Post> findAllPostBy(String username);
+
+    void checkTitle(String title);
 
 }

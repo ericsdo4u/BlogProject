@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-@Document
+@Document("Comment-blog")
 @Data
 public class Comment {
     private String commentMessage;

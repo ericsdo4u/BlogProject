@@ -9,8 +9,8 @@ import africa.semicolon.blogproject.responses.*;
 import africa.semicolon.blogproject.dtos.CommentRequest;
 import africa.semicolon.blogproject.responses.CommentResponse;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class MapperClass {
 
@@ -30,21 +30,8 @@ public class MapperClass {
         registerResponse.setId(user.getId());
         registerResponse.setCreatedAt(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' a").format(user.getCreatedAt()));
         return registerResponse;
-
-    }
-    public static User mapLoginResponse(LoginRequest loginRequest){
-        User user = new User();
-        user.setUsername(loginRequest.getUsername());
-        user.setPassword(loginRequest.getPassword());
-        return user;
     }
 
-    public static User mapLogOutResponse(LogOutRequest logOutRequest){
-        User user = new User();
-        user.setUsername(logOutRequest.getUsername());
-        user.setPassword(logOutRequest.getPassword());
-        return user;
-    }
     public static void checkAccountState(User user){
         if (user.isLocked())
             throw new IllegalArgumentException("login");
@@ -61,8 +48,8 @@ public class MapperClass {
         PostReturnResponse postReturnResponse = new PostReturnResponse();
         postReturnResponse.setTitle(post.getTitle());
         postReturnResponse.setContent(post.getContent());
-        postReturnResponse.setId(post.getId());
         postReturnResponse.setAuthor(post.getAuthor());
+        postReturnResponse.setId(post.getId());
         postReturnResponse.setPostedAt(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(post.getCreatedAt()));
         return postReturnResponse;
     }
@@ -78,6 +65,7 @@ public class MapperClass {
         ViewResponse viewer = new ViewResponse();
         viewer.setUsername(view.getUsername());
         viewer.setMessage("viewed your post");
+        //viewer.setViewer(viewer.getViewer());
         viewer.setTimeOfView(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(view.getTimeOfView()));
         return viewer;
     }
@@ -91,6 +79,7 @@ public class MapperClass {
         CommentResponse commentResponse = new CommentResponse();
         commentResponse.setCommentMessage(comment.getCommentMessage());
         commentResponse.setUsername(comment.getUsername());
+        //commentResponse.setId(commentResponse.getId());
         commentResponse.setPostId(comment.getPostId());
         commentResponse.setTimeCommented(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(comment.getCommentedAt()));
 

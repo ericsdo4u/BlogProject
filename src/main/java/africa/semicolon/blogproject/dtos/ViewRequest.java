@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class ViewRequest {
     private String username;
+    private User viewer;
     private String postId;
-//    private User viewer;
     private String timeOfView;
 }

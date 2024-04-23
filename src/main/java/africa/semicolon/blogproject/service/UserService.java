@@ -19,4 +19,5 @@ public interface UserService {
     DeleteReturnResponse deleteByUsername(DeleteRequest deleteRequest);
     long getListOfRegisterUsers();
     void checkUser(String username);
+    User findByUsername(String username);
 }

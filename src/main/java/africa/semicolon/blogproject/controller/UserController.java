@@ -1,6 +1,7 @@
 package africa.semicolon.blogproject.controller;
 
 import africa.semicolon.blogproject.dtos.*;
+import africa.semicolon.blogproject.exceptions.BlogExceptions;
 import africa.semicolon.blogproject.responses.ApiResponse;
 import africa.semicolon.blogproject.service.CommentService;
 import africa.semicolon.blogproject.service.PostService;
@@ -27,7 +28,7 @@ public class UserController {
         try {
             var result = userService.register(registerRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
-        }catch (Exception e){
+        }catch (BlogExceptions e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
@@ -36,7 +37,7 @@ public class UserController {
         try {
             var result = postService.postBlog(postRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
-        }catch (Exception e){
+        }catch (BlogExceptions e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
@@ -45,7 +46,7 @@ public class UserController {
         try {
             var result = userService.login(loginRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
-        }catch (Exception e){
+        }catch (BlogExceptions e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
@@ -54,7 +55,17 @@ public class UserController {
         try {
             var result = userService.logOut(logOutRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
-        } catch (Exception e) {
+        } catch (BlogExceptions e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/editPost")
+    public ResponseEntity<?> edit(@RequestBody PostRequest postRequest){
+        try {
+            var result = postService.editPost(postRequest);
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        }catch (BlogExceptions e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
@@ -63,7 +74,7 @@ public class UserController {
         try {
             var result = userService.deleteByUsername(deleteRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
-        } catch (Exception e) {
+        } catch (BlogExceptions e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
@@ -72,7 +83,7 @@ public class UserController {
         try {
             var result = commentService.comment(commentRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
-        } catch (Exception e) {
+        } catch (BlogExceptions e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
@@ -82,7 +93,7 @@ public class UserController {
         try {
             var result = viewService.viewPost(viewRequest);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
-        } catch (Exception e) {
+        } catch (BlogExceptions e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }

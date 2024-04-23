@@ -21,7 +21,7 @@ import java.util.Optional;
 import static africa.semicolon.blogproject.utilities.MapperClass.*;
 @AllArgsConstructor
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
 
@@ -32,55 +32,72 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public RegisterResponse register(RegisterRequest registerRequest) {
-        validateUser(registerRequest.getUsername());
+        if (registerRequest.getUsername().isEmpty() || registerRequest.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Username or password cannot be empty");
+        }
+        validateUser(registerRequest.getUsername().toLowerCase());
         User user = mapReg(registerRequest);
         User newUser = userRepository.save(user);
         return mapRegResponse(newUser);
     }
+
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        User foundUser = mapLoginResponse(loginRequest);
-        User userFound = userRepository.findByUsername(foundUser.getUsername().toLowerCase());
-        if (isPasswordIncorrect(userFound, loginRequest.getPassword())) {
+        checkUser(loginRequest.getUsername().toLowerCase());
+        User foundUser = userRepository.findByUsername(loginRequest.getUsername().toLowerCase());
+        if (isPasswordIncorrect(foundUser, loginRequest.getPassword())) {
             throw new IncorrectPasswordException("username or password incorrect");
         }
-        userFound.setLocked(false);
-        userRepository.save(userFound);
+        foundUser.setLocked(false);
+        userRepository.save(foundUser);
         LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setMessage("Successfully login");
+        loginResponse.setMessage("Successfully logged in");
         return loginResponse;
     }
+
     @Override
-    public LogOutResponse logOut(LogOutRequest logOutRequest){
-        User setFoundUser = mapLogOutResponse(logOutRequest);
-        User foundUser =  userRepository.findByUsername(setFoundUser.getUsername());
+    public LogOutResponse logOut(LogOutRequest logOutRequest) {
+        checkUser(logOutRequest.getUsername().toLowerCase());
+        User foundUser = userRepository.findByUsername(logOutRequest.getUsername().toLowerCase());
+        if (isPasswordIncorrect(foundUser, logOutRequest.getPassword())) {
+            throw new IncorrectPasswordException("username or password incorrect");
+        }
         foundUser.setLocked(true);
         userRepository.save(foundUser);
         LogOutResponse logOutResponse = new LogOutResponse();
         logOutResponse.setMessage("logout is successful");
         return logOutResponse;
     }
+
     @Override
     public DeleteReturnResponse deleteByUsername(DeleteRequest deleteRequest) {
-       User foundUser =  userRepository.findByUsername(deleteRequest.getUsername());
-        if (foundUser == null){
+        User foundUser = userRepository.findByUsername(deleteRequest.getUsername().toLowerCase());
+        if (foundUser == null) {
             throw new UserNotFoundException("user not found");
         }
-                userRepository.delete(foundUser);
+        checkAccountState(foundUser);
+        userRepository.delete(foundUser);
         DeleteReturnResponse response = new DeleteReturnResponse();
         response.setMessage("User has been successfully deleted");
         return response;
     }
-    public void validateUser(String username){
-        var user = userRepository.findById(username);
-        if (user.isPresent()){
+
+    public void validateUser(String username) {
+        var user = userRepository.findById(username.toLowerCase());
+        if (user.isPresent()) {
             throw new UserAlreadyExistException("user already exist, please login");
         }
     }
+
     @Override
     public void checkUser(String username) {
-        Optional<User> user = userRepository.findUserByUsername(username);
-        if(user.isEmpty()) throw new UserNotFoundException("User not found");
-
+        Optional<User> user = userRepository.findUserByUsername(username.toLowerCase());
+        if (user.isEmpty()) throw new UserNotFoundException("User not found");
+    }
+    @Override
+    public User findByUsername(String username) {
+        User user = userRepository.findByUsername((username.toLowerCase()));
+        if (user == null) throw new UserNotFoundException("User not found");
+        return user;
     }
 }

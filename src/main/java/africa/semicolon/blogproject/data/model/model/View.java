@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 @Data
-@Document
+@Document("View-for-blog")
 public class View {
     private String username;
-    private String postId;
     @Id
     private String id;
+    private String postId;
     private LocalDateTime timeOfView = LocalDateTime.now();
 }

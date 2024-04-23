@@ -8,6 +8,7 @@ import africa.semicolon.blogproject.dtos.ViewRequest;
 import africa.semicolon.blogproject.exceptions.PostNotFoundException;
 import africa.semicolon.blogproject.responses.ViewResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +19,11 @@ import static africa.semicolon.blogproject.utilities.MapperClass.*;
 @AllArgsConstructor
 @Service
 public class ViewServiceImpl implements ViewService {
+    @Autowired
     private ViewRepo viewRepo;
+    @Autowired
     private PostRepository postRepository;
+    @Autowired
     private UserService userService;
 
     @Override
@@ -41,8 +45,6 @@ public class ViewServiceImpl implements ViewService {
         List<View> views = viewRepo.findViewByPostId(postId);
         return views.size();
     }
-
-
 }
 
 
