@@ -196,8 +196,9 @@ class PostServiceImplTest {
         postRequest1.setAuthor("ericc");
         postService.postBlog(postRequest1);
 
-       postService.findAllPostBy("ericco");
         assertEquals(2, postService.getListOfPost());
+        postService.findAllPostBy("ericco");
+
 
     }
 }

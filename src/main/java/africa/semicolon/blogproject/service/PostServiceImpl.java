@@ -67,13 +67,15 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<Post> findAllPostBy(String username) {
+        System.out.println("i got here");
         List<Post> foundPost = postRepository.findPostByUsername(username.toLowerCase());
-        if (foundPost.isEmpty()){
+        System.out.println("this is me");
+        if (!foundPost.isEmpty()){
             throw new PostNotFoundException("post not found");
         }
-        postRepository.saveAll(foundPost);
+        //postRepository.saveAll(foundPost);
+        //return foundPost;
         return foundPost;
-        //return postRepository.findAll();
     }
 
     @Override
